@@ -1,10 +1,17 @@
+import 'dart:io' show Platform;
+
+import 'package:device_preview/device_preview.dart';
 import 'package:fl/components/themes.dart';
 import 'package:fl/views/home.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 void main() {
-  runApp(const MyApp());
+  if (Platform.isAndroid || Platform.isIOS) {
+    runApp(const MyApp());
+  } else {
+    runApp(DevicePreview(builder: (context) => (const MyApp())));
+  }
 }
 
 class MyApp extends StatelessWidget {
@@ -17,9 +24,7 @@ class MyApp extends StatelessWidget {
       theme: lightTheme(context),
       darkTheme: darkTheme(context),
       themeMode: ThemeMode.system,
-      getPages: [
-        GetPage(name: '/home', page: () => const Home()),
-      ],
+      getPages: [GetPage(name: '/home', page: () => const Home())],
       initialRoute: '/home',
     );
   }
